@@ -160,13 +160,18 @@ class TaskHandler(object):
                 self.exception_hook(e)
 
     def _timer_cb(self, _):
-        lv.tick_inc(self.duration)
-        if self._running:
-            return
+        try:
+            lv.tick_inc(self.duration)
+            if self._running:
+                return
 
-        if self._scheduled < self.max_scheduled:
-            try:
-                micropython.schedule(self._task_handler_ref, 0)
-                self._scheduled += 1
-            except:  # NOQA
-                pass
+            if self._scheduled < self.max_scheduled:
+                try:
+                    micropython.schedule(self._task_handler_ref, 0)
+                    self._scheduled += 1
+                except:  # NOQA
+                    pass
+        except KeyboardInterrupt:
+            print("Ctrl+C detected in timer callback. Stopping...")
+            self.deinit()
+        
