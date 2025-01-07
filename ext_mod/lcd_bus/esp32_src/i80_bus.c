@@ -274,12 +274,12 @@
                 return ret;
             }
 
-            self->panel_io_handle.panel_io = NULL
+            self->panel_io_handle.panel_io = NULL;
 
             if (self->view1 != NULL) {
                 heap_caps_free(self->view1->items);
                 self->view1->items = NULL;
-                self->view1->len = 0
+                self->view1->len = 0;
                 self->view1 = NULL;
                 LCD_DEBUG_PRINT("i80_free_framebuffer(self, buf=1)\n")
             }
@@ -287,12 +287,12 @@
             if (self->view2 != NULL) {
                 heap_caps_free(self->view2->items);
                 self->view2->items = NULL;
-                self->view2->len = 0
+                self->view2->len = 0;
                 self->view2 = NULL;
                 LCD_DEBUG_PRINT("i80_free_framebuffer(self, buf=1)\n")
             }
 
-            uint8_t i= 0;
+            uint8_t i = 0;
             for (;i<i80_bus_count;i++) {
                 if (i80_bus_objs[i] == self) {
                     i80_bus_objs[i] = NULL;
